@@ -92,7 +92,7 @@ if __name__ == "__main__":
                         help='Cluster data directory')
     parser.add_argument('--output_pre_dir', type=str, default="generate_data/cluster_pre_data",
                         help='Path to save the prediction results')
-    parser.add_argument('--model_dir', type=str, default="woHNS_model",
+    parser.add_argument('--model_dir', type=str, default="model",
                         help='Path to the ESM2 model directory')
     parser.add_argument('--n_folds', type=int, default=5,
                         help='Number of folds for cross-validation')
@@ -154,3 +154,4 @@ if __name__ == "__main__":
     # 执行主函数
 
     main(args)
+
