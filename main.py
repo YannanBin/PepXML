@@ -12,7 +12,7 @@ import time
 from K_Means import main as kmeans_main
 from EachClusterSeqLabMatrix import generate_cluster_files
 from ESM2ClassifierforCluster import main as esm2_classifier_main
-from CNNClassifierforCluster import main as cnn_classifier_main
+# from CNNClassifierforCluster import main as cnn_classifier_main
 from MergePredictions import merge_predictions
 from Evaluation import evaluate_predictions
 import warnings
@@ -152,4 +152,5 @@ if __name__ == "__main__":
     setup_logging(args.log_file)
 
     # 执行主函数
+
     main(args)
