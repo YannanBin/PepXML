@@ -108,17 +108,16 @@ def main(args):
 
                     if epoch % args.e_hard_negatives == 0 and epoch > 0:
                         logging.info(f"Epoch {epoch}: 挖掘硬负样本...")
-                        hard_neg_indices = select_hard_negatives(
+                        hard_neg_local = select_hard_negatives(
                             model, train_loader, k=args.k_hard_negatives, confidence_threshold=0.5
                         )
-                        if len(hard_neg_indices) > 0:
-                            original_indices = torch.arange(len(train_dataset))
-                            combined_indices = torch.unique(torch.cat([original_indices, hard_neg_indices]))
-                            new_dataset = TensorDataset(
-                                X[combined_indices], y[combined_indices]
-                            )
+                        if len(hard_neg_local) > 0:
+                            hard_neg_global = train_idx[hard_neg_local]
+                            original_global = train_idx
+                            combined_global = torch.unique(torch.cat([original_global, hard_neg_global]))
+                            new_dataset = TensorDataset(X[combined_global], y[combined_global])
                             train_loader = DataLoader(new_dataset, batch_size=args.batch_size, shuffle=True)
-                            logging.info(f"添加 {len(hard_neg_indices)} 硬负样本")
+                            logging.info(f"添加 {len(hard_neg_global)} 硬负样本（全局索引）")
                         else:
                             logging.info("未找到硬负样本")
 
@@ -190,4 +189,5 @@ if __name__ == "__main__":
     main(args)
     # 记录结束时间
     end_time = time.time()
+
     logging.info(f"总运行时间: {end_time - start_time:.2f} 秒")
